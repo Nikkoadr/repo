@@ -91,7 +91,9 @@ class DatabarangController extends Controller
      * @param  \App\Databarang  $databarang
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Databarang $databarang)
+    public function destroy(Request $request)
     {
+        $data = Databarang::whereIn('id', $request->id_barang)->delete();
+        return redirect('databarang')->with('hapus', '');
     }
 }

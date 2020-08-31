@@ -41,7 +41,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+          <a href="{{route('transaksi')}}" class="nav-link">
               <i class="fas fa-laptop-code{{Request::path() === 'ransaksi'? 'active' :  ''}}"></i>
               <p>
                 Transaksi

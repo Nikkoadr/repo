@@ -27,7 +27,8 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@home')->name('home');
     Route::get('/databarang', 'DatabarangController@index')->name('databarang');
-    Route::post('/tambahbarang', 'DatabarangController@store')->name('tambahbarang');
-    Route::delete('/hapusbarang/{barang}', 'DatabarangController@destroy');
+    Route::post('/tambah/barang', 'DatabarangController@store')->name('tambahbarang');
+    Route::post('/cekbox_delete', 'DatabarangController@destroy')->name('cekbox_delete');
+    Route::get('/transaksi', 'TransaksiController@index')->name('transaksi');
     Route::get('/logout', 'AuthController@Logout')->name('logout');
 });

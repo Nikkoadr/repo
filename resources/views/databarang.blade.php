@@ -36,10 +36,13 @@
               <div class="card-header">
                 <h3 class="card-title">Database Barang</h3>
               </div>
-              <!-- /.card-header -->
+              <form method="POST" action="{{route('cekbox_delete')}}">
+                <!-- /.card-header -->
+                {{ csrf_field() }}
               <div style=" margin-left: 20px; margin-top: 15px">
                 <button type="button" class="btn btn-normal far fa-plus-square btn-primary" 
                 data-toggle="modal" data-target="#tambah_barang"> Tambah Data</button>
+                <button type="submit" class="btn btn-normal far fa-trash-alt btn-danger hapus"> Hapus</button>
                 
               </div>
               <div class="card-body">
@@ -70,7 +73,7 @@
                     <th>{{$loop->iteration}}</th>
                     <th>
                       <label>
-                      <input type="checkbox" class="minimal pilih">
+                      <input type="checkbox" name="id_barang[]" value="{{$barang->id}}" class="minimal pilih">
                       </label>
                     </th>
                     <td>{{$barang->barcode}}</td>
@@ -82,13 +85,6 @@
                     <td>{{$barang->harga_grosir}}</td>
                     <td class="no">
                       <a class="btn btn-xs btn-info" href="">Edit</a>
-                      <form action="/hapusbarang/{{$barang->id}}" method="POST" class="d-inline">
-                        @method('delete')
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-normal far fa-trash-alt btn-danger">
-                          Hapus Data</button>
-      
-                      </form>
                     </td>
                   </tr>
                   @endforeach
@@ -96,6 +92,7 @@
               </table>
               </div>
               <!-- /.card-body -->
+              </form>
 
               <div class="modal fade" id="tambah_barang">
                 <div class="modal-dialog">
@@ -213,7 +210,7 @@ fungsi datatable --}}
 
 hapus data --}}
 <script>
-$(".hapus").click(function(){
+$("#").click(function(){
   Swal.fire({
   title: 'Hapus Data ?',
   text: "Apakah kamu yakin ingin menghapus barang ini",
@@ -257,4 +254,26 @@ Toast.fire({
 </script>
 @endif
 {{-- //tambah data --}}
+
+@if(Session::has("hapus"))
+<script>
+  const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'success',
+  title: "Data berhasil dihapus !"
+})
+</script>
+@endif
+
 @endpush

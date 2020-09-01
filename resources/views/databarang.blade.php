@@ -42,7 +42,7 @@
               <div style=" margin-left: 20px; margin-top: 15px">
                 <button type="button" class="btn btn-normal far fa-plus-square btn-primary" 
                 data-toggle="modal" data-target="#tambah_barang"> Tambah Data</button>
-                <button type="submit" class="btn btn-normal far fa-trash-alt btn-danger hapus"> Hapus</button>
+                <button type="submit" disabled name="hapus" class="btn btn-normal far fa-trash-alt btn-danger disabled hapus" onclick="return confirm('yakin ?, ingin menghapus datanya ?');"> Hapus</button>
                 
               </div>
               <div class="card-body">
@@ -70,12 +70,12 @@
                 <tbody>
                   @foreach ($databarang as $barang)
                   <tr>
-                    <th>{{$loop->iteration}}</th>
-                    <th>
+                    <td>{{$loop->iteration}}</td> <!-- tbody kudue dudu th, tapi td. wkwkwk -->
+                    <td>
                       <label>
                       <input type="checkbox" name="id_barang[]" value="{{$barang->id}}" class="minimal pilih">
                       </label>
-                    </th>
+                    </-->
                     <td>{{$barang->barcode}}</td>
                     <td>{{$barang->nama_barang}}</td>
                     <td>{{$barang->stok}}</td>
@@ -170,27 +170,31 @@
 <script>
   // fungsi cekbox
 	// fungsi saat ingin di check all atau dipilih semua
-  $("#pilih_semua").change(function(){
-			$(".pilih").prop("checked", $(this).prop("checked"))
-		})
-		// berfungsi untuk mengubah beberapa item checkbox terpilih(checklist) semua atau tidak terpilih (unchecklist)
-		$(".pilih").change(function(){
-			if($(this).prop("checked")==false){
-				$("#pilih_semua").prop("checked",false)
-			}
-			// saat beberapa item terpilih dan hampir semua maka akan pada checkbox yang memiliki id CHECKALL terchecklist
-			if($(".pilih:checked").length == $(".pilih").length){
-				$("#pilih_semua").prop("checked",true)
-			}
-		})
+  $(document).on('click','.pilih',function(e){ //mulane nganggo document onclick class .pilih, dadi walaupun kena rwrite ng datatable teetep dienggo, karena selectore document
+    let cbxlength = $('#databarang tbody input:checkbox:checked').length; //cari banyak cekbox yg di check pada tbody
+    let allCbx = $('#databarang tbody input:checkbox').length; //cari semua checkbox pada tbody
+    if (cbxlength == 0){ //jika banyak cekbox yg dicek adalalh 0
+      $('.hapus').addClass('disabled').prop({'disabled':true}); //disable tombol hapus
+    } else {
+      $('.hapus').removeClass('disabled').prop({'disabled':false}); //enable tombol hapus
+    }
+    if (cbxlength == allCbx){ //jika banyak checkbox yg dicek sama dengan semua checkbox
+      $('#pilih_semua').prop({'checked':true}); //check input cehckbox all
+    } else {
+      $('#pilih_semua').prop({'checked':false}); //uncheck input chekbox all
+    }
+  });
 
+  $("#pilih_semua").change(function(){ //all cekbox
+			$(".pilih").prop("checked", $(this).prop("checked"))
+	});
 </script>
 {{--cekbox
 
 fungsi datatable --}}
 <script>
   $(function () {
-    $('#databarang').DataTable({
+    $('#databarang').DataTable({ //kenang menusa kien kih wkwkwk dadi ora kanggo tah ?
       "paging": true,
       "lengthChange": true,
       "searching": true,

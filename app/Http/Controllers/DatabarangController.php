@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Databarang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\Echo_;
 
 class DatabarangController extends Controller
@@ -93,7 +94,19 @@ class DatabarangController extends Controller
      */
     public function destroy(Request $request)
     {
-        $data = Databarang::whereIn('id', $request->id_barang)->delete();
-        return redirect('databarang')->with('hapus', '');
+        try {
+            $valid = Validator::make($request->all(), [
+                'id_barang' => 'required|array|min:1',   //request->id_barang
+                //'id_barang.*' => 'required|numeric|exists:tabel_barang,id' //<-- nama_tabel database karo idne apa
+            ]);
+            if ($valid->fails()) {
+                //return redirect()'pesan eror, pilih salah satu barang';
+            }
+            $data = Databarang::whereIn('id', $request->id_barang)->delete(); //karena nganggo whereIn, baka $request->id_barange kosong atau laka sng diceklist dadie ya keapus kabeh. wkwkkw
+            return redirect('databarang')->with('hapus', '');
+        } catch (\Exception $exception) {
+            return 'Error cuy. ' . collect($exception->getMessage())->join('<br>');
+            //throw new \Exception($exception->getMessage());
+        }
     }
 }

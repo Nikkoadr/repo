@@ -170,6 +170,20 @@
 <script>
   // fungsi cekbox
 	// fungsi saat ingin di check all atau dipilih semua
+  $(document).on('click','#pilih_semua',function(e){ //mulane nganggo document onclick class .pilih, dadi walaupun kena rwrite ng datatable teetep dienggo, karena selectore document
+    let cbxlength = $('#databarang thead input:checkbox:checked').length; //cari banyak cekbox yg di check pada tbody
+    let allCbx = $('#databarang thead input:checkbox').length; //cari semua checkbox pada tbody
+    if (cbxlength == 0){ //jika banyak cekbox yg dicek adalalh 0
+      $('.hapus').addClass('disabled').prop({'disabled':true}); //disable tombol hapus
+    } else {
+      $('.hapus').removeClass('disabled').prop({'disabled':false}); //enable tombol hapus
+    }
+  });
+
+  $("#pilih_semua").change(function(){ //all cekbox
+			$(".pilih").prop("checked", $(this).prop("checked"))
+	});
+
   $(document).on('click','.pilih',function(e){ //mulane nganggo document onclick class .pilih, dadi walaupun kena rwrite ng datatable teetep dienggo, karena selectore document
     let cbxlength = $('#databarang tbody input:checkbox:checked').length; //cari banyak cekbox yg di check pada tbody
     let allCbx = $('#databarang tbody input:checkbox').length; //cari semua checkbox pada tbody
@@ -185,9 +199,6 @@
     }
   });
 
-  $("#pilih_semua").change(function(){ //all cekbox
-			$(".pilih").prop("checked", $(this).prop("checked"))
-	});
 </script>
 {{--cekbox
 

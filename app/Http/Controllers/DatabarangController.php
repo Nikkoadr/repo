@@ -96,17 +96,16 @@ class DatabarangController extends Controller
     {
         try {
             $valid = Validator::make($request->all(), [
-                'id_barang' => 'required|array|min:1',   //request->id_barang
-                //'id_barang.*' => 'required|numeric|exists:tabel_barang,id' //<-- nama_tabel database karo idne apa
+                'id_barang' => 'required|array|min:1',
             ]);
             if ($valid->fails()) {
-                //return redirect()'pesan eror, pilih salah satu barang';
+                return redirect()->back()->with('kosong', '');
             }
             $data = Databarang::whereIn('id', $request->id_barang)->delete(); //karena nganggo whereIn, baka $request->id_barange kosong atau laka sng diceklist dadie ya keapus kabeh. wkwkkw
             return redirect('databarang')->with('hapus', '');
         } catch (\Exception $exception) {
             return 'Error cuy. ' . collect($exception->getMessage())->join('<br>');
-            //throw new \Exception($exception->getMessage());
+            throw new \Exception($exception->getMessage());
         }
     }
 }

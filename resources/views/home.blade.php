@@ -200,4 +200,25 @@ Toast.fire({
 </script>
 @endif
 
+@if(Session::has('sukses_registrasi'))
+<script>
+  const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'success',
+  title: "Anda berhasil registrasi !"
+})
+</script>
+@endif
+
 @endpush

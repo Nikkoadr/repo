@@ -160,8 +160,6 @@
 @endsection
 
 @push('js')
-    
-
 <script src="{{asset('dkk')}}/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="{{asset('dkk')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{asset('dkk')}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -172,7 +170,6 @@
 	// fungsi saat ingin di check all atau dipilih semua
   $(document).on('click','#pilih_semua',function(e){ //mulane nganggo document onclick class .pilih, dadi walaupun kena rwrite ng datatable teetep dienggo, karena selectore document
     let cbxlength = $('#databarang thead input:checkbox:checked').length; //cari banyak cekbox yg di check pada tbody
-    let allCbx = $('#databarang thead input:checkbox').length; //cari semua checkbox pada tbody
     if (cbxlength == 0){ //jika banyak cekbox yg dicek adalalh 0
       $('.hapus').addClass('disabled').prop({'disabled':true}); //disable tombol hapus
     } else {
@@ -205,7 +202,7 @@
 fungsi datatable --}}
 <script>
   $(function () {
-    $('#databarang').DataTable({ //kenang menusa kien kih wkwkwk dadi ora kanggo tah ?
+    $('#databarang').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
@@ -215,8 +212,7 @@ fungsi datatable --}}
       "responsive": true,
       "columnDefs": [ {
           "targets": 'no_order',
-          "orderable": false,
-          
+          "orderable": false, 
     } ]
     });
   });
@@ -224,27 +220,26 @@ fungsi datatable --}}
 {{-- datatable
 
 hapus data --}}
+@if(Session::has("hapus"))
 <script>
-$("#").click(function(){
-  Swal.fire({
-  title: 'Hapus Data ?',
-  text: "Apakah kamu yakin ingin menghapus barang ini",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-  if (result.value) {
-    Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.',
-      'success'
-    )
+  const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 })
-});
+
+Toast.fire({
+  icon: 'success',
+  title: "Data berhasil dihapus !"
+})
 </script>
+@endif
 {{-- hapus data
 
 tambah data --}}
@@ -270,7 +265,7 @@ Toast.fire({
 @endif
 {{-- //tambah data --}}
 
-@if(Session::has("hapus"))
+@if(Session::has("kosong"))
 <script>
   const Toast = Swal.mixin({
   toast: true,
@@ -285,8 +280,8 @@ Toast.fire({
 })
 
 Toast.fire({
-  icon: 'success',
-  title: "Data berhasil dihapus !"
+  icon: 'error',
+  title: "Data yang ingin dihapus tidak ada !"
 })
 </script>
 @endif

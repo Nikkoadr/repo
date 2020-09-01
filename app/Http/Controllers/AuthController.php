@@ -22,7 +22,7 @@ class AuthController extends Controller
         ]);
 
         if (!auth()->attempt(['username' => $request->username, 'password' => $request->password])) {
-            return redirect()->back();
+            return redirect()->back()->with('fail');
         }
         return redirect()->route('home')->with('suksess_masuk', '');
     }
@@ -47,12 +47,12 @@ class AuthController extends Controller
         ]);
 
         auth()->LoginUsingId($user->id);
-        return redirect()->route('home');
+        return redirect()->route('home')->with('sukses_registrasi', '');
     }
 
     public function logout()
     {
         auth()->logout();
-        return redirect()->route('login');
+        return redirect()->route('login')->with('berhasil_logout');
     }
 }

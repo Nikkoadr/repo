@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>@yield('title')</title>
@@ -17,4 +15,5 @@
   <link rel="stylesheet" href="{{asset('dkk')}}/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
+  <!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{asset('dkk')}}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">

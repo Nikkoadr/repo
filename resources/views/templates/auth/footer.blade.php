@@ -1,6 +1,4 @@
 
-<!-- /.login-box -->
-
 <!-- jQuery -->
 <script src="{{asset('dkk')}}/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -8,5 +6,6 @@
 <!-- AdminLTE App -->
 <script src="{{asset('dkk')}}/dist/js/adminlte.min.js"></script>
 
-</body>
-</html>
+<!-- SweetAlert2 -->
+<script src="{{asset('dkk')}}/plugins/sweetalert2/sweetalert2.min.js"></script>
+

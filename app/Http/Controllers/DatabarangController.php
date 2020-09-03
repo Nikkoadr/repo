@@ -71,7 +71,18 @@ class DatabarangController extends Controller
      */
     public function edit(Databarang $databarang)
     {
-        //
+        Databarang::edit(
+            [
+                'barcode' => $request->barcode,
+                'nama_barang' => $request->nama_barang,
+                'stok' => $request->stok,
+                'harga_beli' => $request->harga_beli,
+                'harga_jual_sedikit' => $request->harga_jual_sedikit,
+                'harga_jual_banyak' => $request->harga_jual_banyak,
+                'harga_grosir' => $request->harga_grosir,
+            ]
+        );
+        return redirect()->back()->with('edit', '');
     }
 
     /**

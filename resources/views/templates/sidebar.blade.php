@@ -41,8 +41,8 @@
             </a>
           </li>
           <li class="nav-item">
-          <a href="{{route('transaksi')}}" class="nav-link">
-              <i class="fas fa-laptop-code{{Request::path() === 'ransaksi'? 'active' :  ''}}"></i>
+          <a href="{{route('transaksi')}}" class="nav-link {{Request::path() === 'transaksi'? 'active' :  ''}}">
+              <i class="fas fa-laptop-code"></i>
               <p>
                 Transaksi
               </p>
@@ -57,7 +57,7 @@
             </a>
           </li>
           <li class="nav-item">
-          <a href="{{route('logout')}}" class="nav-link" onclick="return confirm('yakin ?, ingin keluar ?');">
+          <a href="" class="nav-link" onclick="logout(); return false">
             <i class="fas fa-sign-out-alt"></i>
               <p>
                 Keluar
@@ -70,3 +70,20 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+  <script>
+    function logout(){
+      Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value == true) {
+        window.location.href = '{{route('logout')}}';
+      }
+    })
+    }
+  </script>

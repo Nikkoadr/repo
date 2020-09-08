@@ -36,13 +36,13 @@
               <div class="card-header">
                 <h3 class="card-title">Database Barang</h3>
               </div>
-              <form method="POST" action="{{route('cekbox_delete')}}">
+              <form id="formTabelBarang" method="POST" action="{{route('cekbox_delete')}}">
                 <!-- /.card-header -->
                 {{ csrf_field() }}
-              <div style=" margin-left: 20px; margin-top: 15px">
+                <div style=" margin-left: 20px; margin-top: 15px">
                 <button type="button" class="btn btn-normal far fa-plus-square btn-primary" 
                 data-toggle="modal" data-target="#tambah_barang"> Tambah Data</button>
-                <button type="submit" disabled name="hapus" class="btn btn-normal far fa-trash-alt btn-danger disabled hapus" onclick="return confirm('yakin ?, ingin meng hapus datanya ?');"> Hapus</button>
+                <button type="submit" disabled name="hapus" class="btn btn-normal far fa-trash-alt btn-danger disabled hapus"> Hapus</button>
                 
               </div>
               <div class="card-body">
@@ -52,7 +52,7 @@
                   <th >
                     No
                   </th>
-                  <th class="no_order center">
+                  <th data-orderable="false" class="no_order center">
                     <label>
                     <input type="checkbox" class="minimal" id="pilih_semua">
                   </label>
@@ -64,40 +64,10 @@
                   <th>Harga Jual kecil</th>
                   <th>Harga Jual Besar</th>
                   <th>Harga Jual Grosir</th>
-                  <th>Aksi</th>
+                  <th data-orderable="false">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach ($databarang as $barang)
-                  <tr>
-                    <td>{{$loop->iteration}}</td> <!-- tbody kudue dudu th, tapi td. wkwkwk -->
-                    <td>
-                      <label>
-                      <input type="checkbox" name="id_barang[]" value="{{$barang->id}}" class="minimal pilih">
-                      </label>
-                    </-->
-                    <td>{{$barang->barcode}}</td>
-                    <td>{{$barang->nama_barang}}</td>
-                    <td>{{$barang->stok}}</td>
-                    <td>{{$barang->harga_beli}}</td>
-                    <td>{{$barang->harga_jual_sedikit}}</td>
-                    <td>{{$barang->harga_jual_banyak}}</td>
-                    <td>{{$barang->harga_grosir}}</td>
-                    <td class="no">
-                      <button id="edit_barang" type="button" class="btn btn-xs btn-primary"
-                              data_id="{{$barang->id}}"
-                              data_barcode="{{$barang->barcode}}"
-                              data_nama_barang="{{$barang->nama_barang}}"
-                              data_stok="{{$barang->stok}}"
-                              data_harga_beli="{{$barang->harga_beli}}"
-                              data_harga_jual_sedikit="{{$barang->harga_jual_sedikit}}"
-                              data_harga_jual_banyak="{{$barang->harga_jual_banyak}}"
-                              data_Harga_grosir="{{$barang->harga_grosir}}"
-                              data-toggle="modal" data-target="#edit"> Edit
-                      </button>
-                    </td>
-                  </tr>
-                  @endforeach
                 </tbody>
               </table>
               </div>
@@ -167,39 +137,40 @@
                     </div>
                     
                     <form  id="form_edit">
-                      <div class="modal-body" id="view_modal" >
+                      <input type="hidden" name="id_barang" id="edit_id_barang" value="">
+                      <div class="modal-body">
                         {{ csrf_field() }}
                         <!-- text input -->
                         <div class="form-group">
                           <label for="barcode">Barcode</label>
-                          <input id="barcode"name="barcode" type="number" class="form-control" placeholder="Barcode" required>
+                          <input id="barcode" name="barcode" type="number" class="form-control edit_barcode" placeholder="Barcode" required>
                         </div>
                         <div class="form-group">
                           <label for="nama_barang">Nama Barang</label>
-                          <input id="nama_barang"name="nama_barang" type="text" class="form-control" placeholder="Nama Barang" required>
+                          <input id="nama_barang"name="nama_barang" type="text" class="form-control edit_nama_barang" placeholder="Nama Barang" required>
                         </div>
                         <div class="form-group">
                           <label for="stok">Stok</label>
-                          <input id="stok" name="stok" type="number" class="form-control" placeholder="Stok" required>
+                          <input id="stok" name="stok" type="number" class="form-control edit_stok" placeholder="Stok" required>
                         </div>
                         <div class="form-group">
                           <label for="harga_beli">Harga Beli</label>
-                          <input id="harga_beli"name="harga_beli" type="number" class="form-control" placeholder="Harga Beli" required>
+                          <input id="harga_beli"name="harga_beli" type="number" class="form-control edit_harga_beli" placeholder="Harga Beli" required>
                         </div>
                         <div class="form-group">
                           <label for="harga_jual_sedikit">Harga Jual Sedikit</label>
-                          <input id="harga_jual_sedikit"name="harga_jual_sedikit" type="number" class="form-control" placeholder="Harga Jual Kecil" required>
+                          <input id="harga_jual_sedikit"name="harga_jual_sedikit" type="number" class="form-control edit_harga_jual_sedikit" placeholder="Harga Jual Kecil" required>
                         </div>
                         <div class="form-group">
                           <label for="harga_jual_banyak">Harga Jual Banyak</label>
-                          <input id="harga_jual_banyak"name="harga_jual_banyak" type="number" class="form-control" placeholder="Harga Jual Besar" required>
+                          <input id="harga_jual_banyak"name="harga_jual_banyak" type="number" class="form-control edit_harga_jual_banyak" placeholder="Harga Jual Besar" required>
                         </div>
                         <div class="form-group">
                           <label for="harga_grosir">Harga Jual Grosir</label>
-                          <input id="harga_grosir"name="harga_grosir" type="number" class="form-control" placeholder="Harga Jual Grosir" required>
+                          <input id="harga_grosir"name="harga_grosir" type="number" class="form-control edit_jual_grosir" placeholder="Harga Jual Grosir" required>
                         </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                        <button style="float:right" type="submit" class="btn btn-primary">Simpan</button>
+                        <button style="float:right" type="submit" class="btn btn-primary">Edit</button>
                       </div>
                       </form>
                     
@@ -235,7 +206,8 @@
 <script>
   // fungsi cekbox
   $(document).on('click','#pilih_semua',function(e){
-    let cbxlength = $('#databarang thead input:checkbox:checked').length;
+    $(".pilih").prop("checked", $(this).prop("checked"));
+    let cbxlength = $('#databarang tbody input:checkbox:checked').length;
     if (cbxlength == 0){
       $('.hapus').addClass('disabled').prop({'disabled':true});
     } else {
@@ -243,9 +215,6 @@
     }
   });
 
-  $("#pilih_semua").change(function(){
-			$(".pilih").prop("checked", $(this).prop("checked"))
-	});
 
   $(document).on('click','.pilih',function(e){
     let cbxlength = $('#databarang tbody input:checkbox:checked').length;
@@ -267,20 +236,40 @@
 
 fungsi datatable --}}
 <script>
-  $(function () {
-    $('#databarang').DataTable({
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "columnDefs": [ {
-          "targets": 'no_order',
-          "orderable": false, 
-    } ]
-    });
+  var table = $('#databarang').DataTable({
+    "processing": true,
+    "serverSide": true,
+    "ajax"    : {
+      type : 'post',
+      url : "{{route('tabel.barang')}}"
+    },
+    columns : [
+      {"data":"no"},
+      {"data":"cbx",render : function(a,b,c){
+        return '<input type="checkbox" name="id_barang[]" value="'+c.id+'" class="minimal pilih">';
+      }},
+      {"data":"barcode"},
+      {"data":"nama_barang"},
+      {"data":"stok"},
+      {"data":"harga_beli"},
+      {"data":"harga_jual_sedikit"},
+      {"data":"harga_jual_banyak"},
+      {"data":"harga_grosir"},
+      {"data":"aksi", render : function(a,b,c){
+        //console.log(JSON.stringify(c))
+        return '<button id="edit_barang" type="button" class="btn btn-xs btn-primary" ' +
+                    'data-id="'+c.id+'"' +
+                    'data-barcode="'+c.barcode+'"' +
+                    'data-nama-barang="'+c.nama_barang+'"' +
+                    'data-stok="'+c.stok+'"' +
+                    'data-harga_beli="'+c.harga_beli+'"' +
+                    'data-harga_jual_sedikit="'+c.harga_jual_sedikit+'"' +
+                    'data-harga_jual_banyak="'+c.harga_jual_banyak+'"' +
+                    'data-harga_jual_grosir="'+c.harga_grosir+'"' +
+                    'data-toggle="modal" data-target="#edit"> Edit ' +
+               '</button>';
+      }},
+    ]
   });
 </script>
 {{-- datatable
@@ -306,6 +295,48 @@ Toast.fire({
 })
 </script>
 @endif
+
+<script>
+  $('#formTabelBarang').submit(function(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value == true) {
+        $.ajax({
+          url : $(this).attr('action'),
+          type : $(this).attr('method'),
+          data : $(this).serialize(),
+          dataType: 'JSON',
+          error : function(e){
+            Swal.fire('error')
+          },
+          success : function(e){
+            if (e.code == 1000){
+              Swal.fire({
+                icon : 'success',
+                text : e.msg
+              });
+              table.draw();
+            } else {
+              Swal.fire({
+                icon : 'error',
+                text : e.msg
+              })
+            }
+            //Swal.fire('sukses');
+          }
+        })
+      }
+    })
+    return false;
+  })
+</script>
 {{-- hapus data
 
 tambah data --}}
@@ -343,16 +374,16 @@ Swal.fire(
 
 <script>
   $(document).on('click', '#edit_barang',function(){
-  var id = $(this).data('data_id');
-  var barcode = $(this).data('data_barcode');
-  var nama_barang = $(this).data('data_nama_barang');
-  var stok = $(this).data('data_stok');
-  var harga_beli = $(this).data('data-harga_beli');
-  var harga_jual_sedikit = $(this).data('data_harga_jual_sedikit');
-  var harga_jual_banyak = $(this).data('data_harga_jual_banyak');
-  var harga_jual_grosir = $(this).data('data_harga_jual_grosir');
-  $("view_modal #barcode").val(barcode);
-  $("view_modal #nama_barang").val(nama_barang);
+    let meta_data = $(this).attr('data-meta');
+    console.log(meta_data)
+    $('#edit_id_barang').val($(this).attr('data-id'));
+    $('.edit_barcode').val($(this).attr('data-barcode'));
+    $('.edit_nama_barang').val($(this).attr('data-nama-barang'));
+    $('.edit_stok').val($(this).attr('data-stok'));
+    $('.edit_harga_beli').val($(this).attr('data-harga_beli'));
+    $('.edit_harga_jual_sedikit').val($(this).attr('data-harga_jual_sedikit'));
+    $('.edit_harga_jual_banyak').val($(this).attr('data-harga_jual_banyak'));
+    $('.edit_jual_grosir').val($(this).attr('data-harga_jual_grosir'));
 
   })
   </script>

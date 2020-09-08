@@ -15,11 +15,12 @@ class AuthController extends Controller
     public function cek_login(Request $request)
     {
 
-        $this->validate($request, [
+        $valid =  $this->validate($request, [
 
             'username' => ['required'],
             'password' => ['required', 'min:8']
         ]);
+    
 
         if (!auth()->attempt(['username' => $request->username, 'password' => $request->password])) {
             return redirect()->back()->with('fail');

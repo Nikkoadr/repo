@@ -256,7 +256,6 @@ fungsi datatable --}}
       {"data":"harga_jual_banyak"},
       {"data":"harga_grosir"},
       {"data":"aksi", render : function(a,b,c){
-        //console.log(JSON.stringify(c))
         return '<button id="edit_barang" type="button" class="btn btn-xs btn-primary" ' +
                     'data-id="'+c.id+'"' +
                     'data-barcode="'+c.barcode+'"' +
@@ -299,13 +298,13 @@ Toast.fire({
 <script>
   $('#formTabelBarang').submit(function(){
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Apa Kamu yakin?',
+      text: "ingin menghapus data ini ?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Ya, hapus !'
     }).then((result) => {
       if (result.value == true) {
         $.ajax({
@@ -329,7 +328,6 @@ Toast.fire({
                 text : e.msg
               })
             }
-            //Swal.fire('sukses');
           }
         })
       }
@@ -362,16 +360,6 @@ Toast.fire({
 @endif
 {{-- //tambah data --}}
 
-@if(Session::has("kosong"))
-<script>
-Swal.fire(
-  'Data yang ingin dihapus tidak ada',
-  'ceklis dulu data yang ingin dihapus !',
-  'error'
-)
-</script>
-@endif
-
 <script>
   $(document).on('click', '#edit_barang',function(){
     let meta_data = $(this).attr('data-meta');
@@ -384,7 +372,6 @@ Swal.fire(
     $('.edit_harga_jual_sedikit').val($(this).attr('data-harga_jual_sedikit'));
     $('.edit_harga_jual_banyak').val($(this).attr('data-harga_jual_banyak'));
     $('.edit_jual_grosir').val($(this).attr('data-harga_jual_grosir'));
-
   })
   </script>
 

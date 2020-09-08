@@ -73,13 +73,13 @@
   <script>
     function logout(){
       Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Apa anda yakin ?',
+      text: "ingin keluar dari aplikasi ini ?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Keluar'
     }).then((result) => {
       if (result.value == true) {
         window.location.href = '{{route('logout')}}';

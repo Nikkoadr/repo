@@ -27,7 +27,6 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@home')->name('home');
     Route::get('/databarang', 'DatabarangController@index')->name('databarang');
-    
     Route::post('/tambah/barang', 'DatabarangController@store')->name('tambahbarang');
     Route::post('/edit/barang', 'DatabarangController@edit')->name('editbarang');
     Route::post('/cekbox_delete', 'DatabarangController@destroy')->name('cekbox_delete');

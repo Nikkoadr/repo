@@ -19,16 +19,16 @@ class DatabarangController extends Controller
         $databarang = [];
         return view('databarang', compact('databarang'));
     }
-    public function tabel(Request $request){
-        try{
+    public function tabel(Request $request)
+    {
+        try {
             $data = Databarang::all();
-            $data->map(function($data,$index){
+            $data->map(function ($data, $index) {
                 $data->no = $index + 1;
             });
-            return ['data'=>$data,'draw'=>$request->draw,'recordsTotal'=>$data->count(),'recordsFiltered'=>$data->count()];
-        }catch(Exception $exc){
+            return ['data' => $data, 'draw' => $request->draw, 'recordsTotal' => $data->count(), 'recordsFiltered' => $data->count()];
+        } catch (Exception $exc) {
             throw new Exception($exc->getMessage());
-            
         }
     }
 
@@ -122,12 +122,11 @@ class DatabarangController extends Controller
                 'id_barang' => 'required|array|min:1',
             ]);
             if ($valid->fails()) {
-                return ['code'=>500,'msg'=>collect($valid->errors()->all()->join('#'))];
+                return ['code' => 500, 'msg' => collect($valid->errors()->all()->join('#'))];
                 //return redirect()->back()->with('kosong', '');
             }
             $data = Databarang::whereIn('id', $request->id_barang)->delete(); //karena nganggo whereIn, baka $request->id_barange kosong atau laka sng diceklist dadie ya keapus kabeh. wkwkkw
-            return ['code'=>1000,'msg'=>'wis diapus cuy'];
-            //return redirect('databarang')->with('hapus', '');
+            return ['code' => 1000, 'msg' => 'Data sudah terhapus'];
         } catch (\Exception $exception) {
             return 'Error cuy. ' . collect($exception->getMessage())->join('<br>');
             throw new \Exception($exception->getMessage());
